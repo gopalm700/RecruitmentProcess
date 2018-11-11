@@ -10,8 +10,8 @@ Spring-data-jpa<br>
 H2 inmemory DB
 
 # How to run application
-Start the application: execute <b> mvn clean verify spring-boot:run </b> inside recruitment folder <br
-Start application Without tests:  <b> mvn clean verify -DskipTests sping-boot:run </b>
+Start the application: execute <b> mvn clean verify spring-boot:run </b> inside recruitment folder <br>
+Start application Without tests:  <b> mvn clean verify -DskipTests sping-boot:run </b><br>
 Swagger Doc: http://localhost:8080/
 
 
