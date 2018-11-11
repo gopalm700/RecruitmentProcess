@@ -13,7 +13,7 @@ Spring boot,
 Spring-data-jpa
 
 # How to run application
-Start the application: execute mvn clean verify spring-boot:run inside recruitment folder
+Start the application: execute mvn clean verify spring-boot:run inside recruitment folder <br>
 Swagger Doc: http://localhost:8080/
 
 
