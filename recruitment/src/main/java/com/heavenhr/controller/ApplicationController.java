@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,10 +70,15 @@ public class ApplicationController {
   @ResponseBody
   @ApiOperation(value = "Update application status")
   public ApplicationResponse updateApplicationStatus(@Valid @PathVariable long id,
-      @RequestParam ApplicationStatus status)
-      throws ConstraintsViolationException, DataNotFoundException {
-    return new ApplicationResponse(
-        applicationConverter.entityToDto(applicationService.updateApplicationStatus(id, status)));
+      @RequestBody String status) throws ConstraintsViolationException, DataNotFoundException {
+    ApplicationStatus applicationStatus = null;
+    try {
+      applicationStatus = ApplicationStatus.valueOf(status);
+    } catch (Exception e) {
+      throw new DataNotFoundException("Corrupted data");
+    }
+    return new ApplicationResponse(applicationConverter
+        .entityToDto(applicationService.updateApplicationStatus(id, applicationStatus)));
   }
 
   @GetMapping("/v1/application/offer/{id}")

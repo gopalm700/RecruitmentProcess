@@ -35,7 +35,7 @@ public class ApplicationConverter {
 
   public ApplicationDto entityToDto(Application application) {
     return ApplicationDto.builder().id(application.getId())
-        .offer(offerConverter.internalToExternal(application.getRelatedOffer()))
+        .offer(offerConverter.entityToDto(application.getRelatedOffer()))
         .candidateEmail(application.getCandidateEmail()).resumeText(application.getResumeText())
         .applicationStatus(application.getApplicationStatus()).build();
   }

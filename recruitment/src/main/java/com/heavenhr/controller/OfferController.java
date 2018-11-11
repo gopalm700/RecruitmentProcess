@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +27,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("api")
 @Api("Offers")
 public class OfferController {
 
@@ -44,23 +42,23 @@ public class OfferController {
   @ResponseStatus(CREATED)
   public OfferResponse createOffer(@Valid @RequestBody String jobTitle)
       throws ConstraintsViolationException {
-    return new OfferResponse(offerConverter.internalToExternal(offerService.createOffer(jobTitle)));
+    return new OfferResponse(offerConverter.entityToDto(offerService.createOffer(jobTitle)));
   }
 
-  @GetMapping("/v1/offer/{id}")
+  @GetMapping(path = "/v1/offer/{id}")
   @ResponseBody
   @ApiOperation(value = "Find offer by id")
   public OfferResponse findOfferById(@Valid @PathVariable Long id) throws DataNotFoundException {
-    return new OfferResponse(offerConverter.internalToExternal(offerService.findById(id)));
+    return new OfferResponse(offerConverter.entityToDto(offerService.findById(id)));
   }
 
 
-  @GetMapping("/v1/offer")
+  @GetMapping(path = "/v1/offer")
   @ResponseBody
   @ApiOperation(value = "Find all offers")
   public OffersResponse findOffers() {
-    return new OffersResponse(offerService.findAll().stream()
-        .map(offerConverter::internalToExternal).collect(Collectors.toList()));
+    return new OffersResponse(offerService.findAll().stream().map(offerConverter::entityToDto)
+        .collect(Collectors.toList()));
   }
 
   @GetMapping("/v1/offer/{id}/applicationcount")
